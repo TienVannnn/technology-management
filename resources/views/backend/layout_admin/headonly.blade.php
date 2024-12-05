@@ -4,4 +4,7 @@
     <title>{{ $title ?? 'Website quản lý thiết bị công nghệ' }}</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('backend/assets/images/logos/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('backend/assets/css/styles.min.css') }}" />
-  </head>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="/backend/assets/css/custom.css" />
+
+</head>
