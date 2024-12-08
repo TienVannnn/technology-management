@@ -50,7 +50,7 @@
                                     <div class="d-flex align-items-center justify-content-between mb-4">
                                         <div class="form-check">
                                             <input class="form-check-input primary" type="checkbox" value=""
-                                                id="flexCheckChecked">
+                                                id="flexCheckChecked" name="remember">
                                             <label class="form-check-label text-dark" for="flexCheckChecked">
                                                 Remeber this Device
                                             </label>
