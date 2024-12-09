@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class EditUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,13 +21,14 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('user');
-
         return [
             'name' => 'required|string|min:2',
-            'email' => $userId
-                ? "required|email|unique:users,email,$userId"
-                : 'required|email|unique:users,email',
+            'phone' => [
+                'nullable',
+                'regex:/^(0|\+84)(3[2-9]|5[2689]|7[0-9]|8[1-9]|9[0-9])[0-9]{7}$/'
+            ],
+            'avatar' => 'nullable|mimes:png,jpg,jpeg|max:2048',
+            'old_password' => 'required_with:password',
             'password' => 'nullable|min:5|confirmed'
         ];
     }

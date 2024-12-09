@@ -31,11 +31,12 @@
                                                     <a href="{{ route('user.edit', $user->id) }}"
                                                         class="btn btn-outline-primary btn-sm me-2" title="Edit"><i
                                                             class="fas fa-pen-to-square"></i></a>
-                                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                        class="delete-form">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button type="submit" title="Delete"
-                                                            class="btn btn-outline-danger btn-sm"><i
+                                                        <button type="button" title="Delete"
+                                                            class="btn btn-outline-danger btn-sm delete-btn"><i
                                                                 class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
@@ -54,4 +55,9 @@
     </div>
     </div>
     </div>
+@endsection
+
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 @endsection

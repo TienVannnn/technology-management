@@ -42,10 +42,11 @@ class UserService
             DB::beginTransaction();
             $user->fill([
                 'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'phone' => $request->phone,
+                'email' => $request->email
             ]);
+            if ($request->password) {
+                $user->password = $request->password;
+            }
             $user->save();
             DB::commit();
             Session::flash('success', 'User updated successfully');
@@ -60,7 +61,6 @@ class UserService
     public function deleteUser($user)
     {
         $user->delete();
-        Session::flash('success', 'User deleted successfully');
         return;
     }
 }
