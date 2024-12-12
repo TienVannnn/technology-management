@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\EditUserRequest;
 use App\Http\Requests\Backend\LoginRequest;
+use App\Http\Requests\Backend\RecoveryInfoRequest;
+use App\Http\Requests\Backend\RecoveryPasswordRequest;
+use App\Jobs\RecoveryPasswordJob;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,5 +88,58 @@ class AuthController extends Controller
         Auth::logout();
         Session::flash('success', 'Logout successfully');
         return redirect()->route('login');
+    }
+
+    public function forgot_password()
+    {
+        $title = 'Forgot password | Technical_VT';
+        return view('backend.auth.forgot_password', compact('title'));
+    }
+
+    public function handle_forgot_password(RecoveryPasswordRequest $request)
+    {
+        $token = Str::random(10);
+        $expiration = Carbon::now()->addMinutes(15);
+        $user = User::where('email', $request->email)->first();
+        $user->update([
+            'token_reset_password' => $token,
+            'token_duration' => $expiration,
+        ]);
+        RecoveryPasswordJob::dispatch($request->email, $token)->delay(now()->addSecond(5));
+        Session::flash('success', 'Mã xác nhận đã được gửi đến bạn. Vui lòng kiểm tra email');
+        return redirect()->route('admin.form_recovery')->with([
+            'email' => $request->email
+        ]);
+    }
+
+    public function recovery_password()
+    {
+        $email = session('email');
+        $title = 'Khôi phục mật khẩu';
+        return view('backend.auth.recovery_password', compact('title', 'email'));
+    }
+
+    public function hanle_recovery_password(RecoveryInfoRequest $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        $user = User::where('email', $email)->first();
+        if ($user->token_reset_password === $request->token_reset_password) {
+            if (Carbon::now()->greaterThan($user->token_duration)) {
+                Session::flash('error', 'Mã xác nhận đã hết hạn, vui lòng yêu cầu mã xác nhận mới');
+                return redirect()->back();
+            }
+            $user->update([
+                'password' => Hash::make($password),
+                'token_reset_password' => null,
+                'token_duration' => null
+            ]);
+            if (Auth::attempt(['email' => $email, 'password' => $password])) {
+                Session::flash('success', 'Đổi mật khẩu thành công');
+                return redirect()->route('admin.dashboard');
+            }
+        }
+        Session::flash('error', 'Token không hợp lệ!');
+        return redirect()->back();
     }
 }
