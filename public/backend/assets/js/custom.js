@@ -1,3 +1,8 @@
+$.ajaxSetup({
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+});
 const changePasswordBtn = document.getElementById("changePasswordBtn");
 if (changePasswordBtn) {
     changePasswordBtn.addEventListener("click", function () {

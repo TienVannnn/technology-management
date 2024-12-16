@@ -56,4 +56,10 @@ class Helper
 
         return $html;
     }
+
+    public static function active($status = 0, $id, $message): string
+    {
+        return $status == 0 ? '<span class="btn btn-danger btn-sm changeStatus" data-slug="' . $message . '" data-id="' . $id . '">Không hoạt động</span>'
+            : '<span class="btn btn-success btn-sm changeStatus" data-slug="' . $message . '" data-id="' . $id . '">Hoạt động</span>';
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\ReusableController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::post('/change-status/{id}/{slug}', [ReusableController::class, 'changeStatus'])->name('reusable.changeStatus');
 Route::get('/admin/login', [AuthController::class, 'login_form'])->name('login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('handleLoginAdmin');
 Route::get('/admin/forgot-password', [AuthController::class, 'forgot_password'])->name('admin.forgotpassword');

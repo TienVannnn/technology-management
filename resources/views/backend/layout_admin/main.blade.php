@@ -25,6 +25,7 @@
             </div>
         </div>
     </div>
+    @routes
     @include('backend.layout_admin.script')
     @yield('js')
 </body>

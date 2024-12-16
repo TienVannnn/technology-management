@@ -6,3 +6,4 @@
 <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 <link rel="stylesheet" href="/backend/assets/css/custom.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">

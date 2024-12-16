@@ -29,11 +29,19 @@
                     <span class="hide-menu">UI COMPONENTS</span>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('department.index') }}">
+                        <span>
+                            <i class="ti ti-building"></i>
+                        </span>
+                        <span class="hide-menu">Department</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('user.index') }}">
                         <span>
                             <i class="ti ti-user"></i>
                         </span>
-                        <span class="hide-menu">Users</span>
+                        <span class="hide-menu">User</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

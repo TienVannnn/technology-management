@@ -1,0 +1,47 @@
+@extends('backend.layout_admin.main')
+@section('content')
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4"><a href="{{ route('department.index') }}"><i
+                                class="fas fa-arrow-left me-2 p-2 rounded-circle btn btn-outline-secondary"></i></a>Edit
+                        department
+                        {{ $department->name }}</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{ route('department.update', $department->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" value="{{ $department->name }}" class="form-control"
+                                        id="name" aria-describedby="emailHelp" name="name"
+                                        @error('name') is-invalid @enderror">
+                                    @error('name')
+                                        <div class="message-error">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select name="status" id="status" class="form-select">
+                                        <option value="1" {{ $department->status === 1 ? 'selected' : '' }}>Hoạt động
+                                        </option>
+                                        <option value="0" {{ $department->status === 0 ? 'selected' : '' }}>Không
+                                            hoạt động</option>
+                                    </select>
+                                    @error('status')
+                                        <div class="message-error">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+@endsection
