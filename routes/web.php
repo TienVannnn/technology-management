@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\DepartmentController;
+use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +23,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/change-info', [AuthController::class, 'changeInfo'])->name('admin.changeInfo');
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/user', UserController::class);
+    Route::resource('/role', RoleController::class);
+    Route::resource('/permission', PermissionController::class);
+    Route::resource('/department', DepartmentController::class);
 });

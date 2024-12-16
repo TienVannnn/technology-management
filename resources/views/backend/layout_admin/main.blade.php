@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="en">
-@include('backend.layout_admin.headonly')
+
+<head>
+    @include('backend.layout_admin.headonly')
+    @yield('css')
+</head>
 
 <body>
     <!--  Body Wrapper -->
@@ -21,8 +25,8 @@
             </div>
         </div>
     </div>
-    @yield('js')
     @include('backend.layout_admin.script')
+    @yield('js')
 </body>
 
 </html>

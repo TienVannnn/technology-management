@@ -27,6 +27,18 @@
                                         <div class="message-error">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">Role</label>
+                                    <select class="form-control tag-select" multiple="multiple" id="role"
+                                        name="role[]">
+                                        @if (!empty($roles))
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+
+                                </div>
                                 <button type="submit" class="btn btn-primary">Add</button>
                             </form>
                         </div>
@@ -37,4 +49,20 @@
     </div>
     </div>
     </div>
+@endsection
+
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(function() {
+            $('.tag-select').select2({
+                placeholder: "Choose role"
+            })
+        })
+    </script>
 @endsection

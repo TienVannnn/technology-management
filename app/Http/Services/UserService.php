@@ -13,6 +13,10 @@ class UserService
 {
     public function getUsers()
     {
+        $user = Auth::user();
+        if ($user->id === 1) {
+            return User::orderByDesc('id')->paginate(15);
+        }
         return User::orderByDesc('id')->whereNot('id', 1)->paginate(15);
     }
     public function createUser($request)
@@ -25,6 +29,10 @@ class UserService
                 'email' => $request->email,
                 'password' => Hash::make($rand)
             ]);
+
+            if ($request->has('role')) {
+                $user->assignRole($request->role);
+            }
             DB::commit();
             Session::flash('success', 'User created successfully');
             MailAccountJob::dispatch($user, $rand)->delay(now()->addSecond(10));
@@ -48,6 +56,7 @@ class UserService
                 $user->password = $request->password;
             }
             $user->save();
+            $user->syncRoles($request->role ?? []);
             DB::commit();
             Session::flash('success', 'User updated successfully');
             return true;

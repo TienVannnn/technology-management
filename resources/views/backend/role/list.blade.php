@@ -5,40 +5,43 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-title fw-semibold mb-4">User List</h5>
-                        @can('add user')
-                            <a href="{{ route('user.create') }}" class="btn btn-secondary"><i class="fas fa-plus me-1"></i> Add
-                                user</a>
+                        <div class="d-flex">
+                            <input type="search" class="form-control" placeholder="Enter role name" style="margin-right: 2px;">
+                            <button type="submit"
+                                class="btn btn-secondary btn-sm d-flex justify-content-center align-items-center"
+                                style="border-radius: 10px"><i class="fas fa-search"></i>Search</button>
+                        </div>
+                        @can('add role')
+                            <a href="{{ route('role.create') }}" class="btn btn-secondary"><i class="fas fa-plus me-1"></i> Add
+                                role</a>
                         @endcan
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            @if ($users->count() > 0)
+                            @if ($roles->count() > 0)
                                 <table class="table">
                                     <thead class="table-primary">
                                         <tr>
                                             <th scope="col">No</th>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Email</th>
-                                            @can(['edit user', 'delete user'])
+                                            @can(['edit role', 'delete role'])
                                                 <th scope="col">Handle</th>
                                             @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $key => $user)
+                                        @foreach ($roles as $key => $role)
                                             <tr>
                                                 <th scope="row">{{ $key + 1 }}</th>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $role->name }}</td>
                                                 <td class="d-flex align-items-center">
-                                                    @can('edit user')
-                                                        <a href="{{ route('user.edit', $user->id) }}"
+                                                    @can('edit role')
+                                                        <a href="{{ route('role.edit', $role->id) }}"
                                                             class="btn btn-outline-primary btn-sm me-2" title="Edit"><i
                                                                 class="fas fa-pen-to-square"></i></a>
                                                     @endcan
-                                                    @can('delete user')
-                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                    @can('delete role')
+                                                        <form action="{{ route('role.destroy', $role->id) }}" method="POST"
                                                             class="delete-form">
                                                             @method('DELETE')
                                                             @csrf
@@ -53,7 +56,7 @@
                                     </tbody>
                                 </table>
                             @else
-                                <p class="alert alert-danger">No user found</p>
+                                <p class="alert alert-danger">No role found</p>
                             @endif
                         </div>
                     </div>

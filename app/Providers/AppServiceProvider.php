@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Permission;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\PermissionRegistrar;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
+        app(PermissionRegistrar::class)->setPermissionClass(Permission::class);
     }
 }

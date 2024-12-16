@@ -36,7 +36,22 @@
                         <span class="hide-menu">Users</span>
                     </a>
                 </li>
-
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('role.index') }}">
+                        <span>
+                            <i class="ti ti-pencil"></i>
+                        </span>
+                        <span class="hide-menu">Role</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('permission.index') }}">
+                        <span>
+                            <i class="ti ti-hammer"></i>
+                        </span>
+                        <span class="hide-menu">Permission</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

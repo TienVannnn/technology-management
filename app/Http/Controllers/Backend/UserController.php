@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\UserRequest;
-use App\Http\Services\Test;
 use App\Models\User;
 use App\Http\Services\UserService;
-use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    use AuthorizesRequests;
     protected $userService;
     public function __construct(UserService $user)
     {
@@ -20,6 +21,7 @@ class UserController extends Controller
 
     public function index()
     {
+        $this->authorize('list user');
         $title = 'User List';
         $users = $this->userService->getUsers();
         return view('backend.user.list', compact('title', 'users'));
@@ -30,8 +32,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('add user');
         $title = 'Create user';
-        return view('backend.user.create', compact('title'));
+        $roles = Role::orderByDesc('id')->get();
+        return view('backend.user.create', compact('title', 'roles'));
     }
 
     /**
@@ -39,6 +43,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $this->authorize('add user');
         $result = $this->userService->createUser($request);
         if ($result) {
             return redirect()->route('user.index');
@@ -59,12 +64,15 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('edit user');
         $user = User::find($id);
         if (!$user) {
             abort('404');
         }
         $title = 'Edit user ' . $user->name;
-        return view('backend.user.edit', compact('title', 'user'));
+        $rolesChecked = $user->roless->pluck('id')->toArray();
+        $roles = Role::orderByDesc('id')->get();
+        return view('backend.user.edit', compact('title', 'user', 'rolesChecked', 'roles'));
     }
 
     /**
@@ -72,6 +80,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, string $id)
     {
+        $this->authorize('edit user');
         $user = User::find($id);
         if (!$user) {
             abort('404');
@@ -88,6 +97,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete user');
         $user = User::find($id);
         if (!$user) {
             abort('404');

@@ -1,0 +1,42 @@
+.module-parent .form-custom {
+    background-color: #13deb9;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+}
+
+.module-parent .checkbox-parent {
+    margin-right: 10px;
+}
+.module-parent .form-check-input + .form-check-label:hover {
+    cursor: pointer;
+    color: #10bd9d;
+}
+
+.module-parent .form-check-inline {
+    margin: 10px 15px;
+}
+
+.checkbox-childrent {
+    margin-right: 5px;
+}
+
+.check-all {
+    margin-bottom: 15px;
+}
+
+.form-check-inline label {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.form-check-inline label:hover {
+    color: #10bd9d;
+}
+.form-check-input {
+    margin-left: 0 !important;
+}

@@ -13,6 +13,7 @@ const deleteButtons = document.querySelectorAll(".delete-btn");
 if (deleteButtons.length > 0) {
     deleteButtons.forEach((button) => {
         button.addEventListener("click", function () {
+            event.preventDefault();
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -23,11 +24,12 @@ if (deleteButtons.length > 0) {
                 confirmButtonText: "Yes, delete it!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.closest("form").submit();
                     Swal.fire({
                         title: "Deleted!",
-                        text: "User has been deleted.",
+                        text: "Deleted.",
                         icon: "success",
+                    }).then(() => {
+                        this.closest("form").submit();
                     });
                 }
             });
