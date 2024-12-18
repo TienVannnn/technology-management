@@ -20,7 +20,7 @@ class RoleController extends Controller
     {
         $this->authorize('list role');
         $title = 'Role List';
-        $roles = Role::orderByDesc('id')->paginate(15);
+        $roles = Role::orderByDesc('id')->paginate(10);
         return view('backend.role.list', compact('title', 'roles'));
     }
 

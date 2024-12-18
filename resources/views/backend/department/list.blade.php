@@ -34,7 +34,7 @@
                                     <tbody>
                                         @foreach ($departments as $key => $department)
                                             <tr>
-                                                <th scope="row">{{ $key + 1 }}</th>
+                                                <th scope="row">{{ $departments->firstItem() + $key }}</th>
                                                 <td>{{ $department->name }}</td>
                                                 <td>{!! \App\Helpers\Helper::active($department->status, $department->id, 'department') !!}</td>
                                                 <td class="d-flex align-items-center">
@@ -61,6 +61,9 @@
                             @else
                                 <p class="alert alert-danger">No department found</p>
                             @endif
+                        </div>
+                        <div class="d-flex justify-content-center ">
+                            {{ $departments->links() }}
                         </div>
                     </div>
                 </div>

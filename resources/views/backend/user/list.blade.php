@@ -5,7 +5,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-title fw-semibold mb-4">User List</h5>
+                        <div class="d-flex">
+                            <input type="search" class="form-control" placeholder="User" style="margin-right: 2px;">
+                            <button type="submit"
+                                class="btn btn-secondary btn-sm d-flex justify-content-center align-items-center"
+                                style="border-radius: 10px"><i class="fas fa-search"></i>Search</button>
+                        </div>
                         @can('add user')
                             <a href="{{ route('user.create') }}" class="btn btn-secondary"><i class="fas fa-plus me-1"></i> Add
                                 user</a>
@@ -28,7 +33,7 @@
                                     <tbody>
                                         @foreach ($users as $key => $user)
                                             <tr>
-                                                <th scope="row">{{ $key + 1 }}</th>
+                                                <th scope="row">{{ $users->firstItem() + $key }}</th>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td class="d-flex align-items-center">
@@ -55,6 +60,9 @@
                             @else
                                 <p class="alert alert-danger">No user found</p>
                             @endif
+                        </div>
+                        <div class="d-flex justify-content-center ">
+                            {{ $users->links() }}
                         </div>
                     </div>
                 </div>

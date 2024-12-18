@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Helper
 {
-    public static function permission($permissions, $parent_id = 0, $char = '')
+    public static function permission($permissions, $parent_id = 0, $char = '', $index = 1)
     {
         $html = '';
         $allPermissions = Permission::all()->keyBy('id');
@@ -23,39 +23,40 @@ class Helper
                 $canDelete = Auth::user()->can('delete permission');
 
                 $html .= '
-                    <tr>
-                        <td>' . e($permission->id) . '</td>
-                        <td>' . e($char . $permission->name) . '</td>
-                        <td>' . $parentName . '</td>
-                        <td>';
+                <tr>
+                    <td>' . $index++ . '</td>
+                    <td>' . e($char . $permission->name) . '</td>
+                    <td>' . $parentName . '</td>
+                    <td>';
 
                 if ($canEdit) {
                     $html .= '<a href="' . e($editUrl) . '" class="btn btn-primary btn-sm" title="Edit">
-                                <i class="fas fa-edit"></i>
-                              </a>';
+                            <i class="fas fa-edit"></i>
+                          </a>';
                 }
 
                 if ($canDelete) {
                     $html .= '
-                        <form action="' . e($deleteUrl) . '" method="POST" style="display: inline" class="delete-form">
-                            ' . method_field('DELETE') . '
-                            ' . csrf_field() . '
-                            <button class="btn btn-danger btn-sm delete-btn" title="Delete">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>';
+                    <form action="' . e($deleteUrl) . '" method="POST" style="display: inline" class="delete-form">
+                        ' . method_field('DELETE') . '
+                        ' . csrf_field() . '
+                        <button class="btn btn-danger btn-sm delete-btn" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>';
                 }
 
                 $html .= '</td></tr>';
 
                 unset($permissions[$key]);
-
-                $html .= self::permission($permissions, $permission->id, $char . '|--');
+                $html .= self::permission($permissions, $permission->id, $char . '|--', $index);
             }
         }
 
         return $html;
     }
+
+
 
     public static function active($status = 0, $id, $message): string
     {

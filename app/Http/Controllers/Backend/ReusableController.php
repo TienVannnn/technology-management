@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Department;
 
 class ReusableController extends Controller
@@ -12,6 +13,10 @@ class ReusableController extends Controller
         switch ($slug) {
             case 'department': {
                     $module = Department::find($id);
+                    break;
+                }
+            case 'customer': {
+                    $module = Customer::find($id);
                     break;
                 }
         }

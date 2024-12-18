@@ -19,7 +19,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('list department');
         $title = 'Department List';
-        $departments = Department::orderByDesc('id')->paginate(15);
+        $departments = Department::orderByDesc('id')->paginate(10);
         return view('backend.department.list', compact('title', 'departments'));
     }
 

@@ -11,11 +11,11 @@
                                 class="btn btn-secondary btn-sm d-flex justify-content-center align-items-center"
                                 style="border-radius: 10px"><i class="fas fa-search"></i>Search</button>
                         </div>
-                        {{-- @can('add permission') --}}
-                        <a href="{{ route('permission.create') }}" class="btn btn-secondary"><i
-                                class="fas fa-plus me-1"></i> Add
-                            permission</a>
-                        {{-- @endcan --}}
+                        @can('add permission')
+                            <a href="{{ route('permission.create') }}" class="btn btn-secondary"><i
+                                    class="fas fa-plus me-1"></i> Add
+                                permission</a>
+                        @endcan
                     </div>
                     <div class="card">
                         <div class="card-body">
@@ -32,12 +32,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {!! \App\Helpers\Helper::permission($permissions) !!}
+                                        {!! \App\Helpers\Helper::permission($permissions, 0, '', $permissions->firstItem()) !!}
                                     </tbody>
                                 </table>
                             @else
                                 <p class="alert alert-danger">No permission found</p>
                             @endif
+                        </div>
+                        <div class="d-flex justify-content-center ">
+                            {{ $permissions->links() }}
                         </div>
                     </div>
                 </div>

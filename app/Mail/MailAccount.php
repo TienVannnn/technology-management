@@ -2,12 +2,8 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class MailAccount extends Mailable
@@ -17,7 +13,7 @@ class MailAccount extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user, $rand)
+    public function __construct($user, $rand)
     {
         $this->user = $user;
         $this->rand = $rand;

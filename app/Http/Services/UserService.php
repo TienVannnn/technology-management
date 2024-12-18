@@ -15,7 +15,7 @@ class UserService
     {
         $user = Auth::user();
         if ($user->id === 1) {
-            return User::orderByDesc('id')->paginate(15);
+            return User::orderByDesc('id')->paginate(10);
         }
         return User::orderByDesc('id')->whereNot('id', 1)->paginate(15);
     }
@@ -53,7 +53,7 @@ class UserService
                 'email' => $request->email
             ]);
             if ($request->password) {
-                $user->password = $request->password;
+                $user->password = Hash::make($request->password);
             }
             $user->save();
             $user->syncRoles($request->role ?? []);
