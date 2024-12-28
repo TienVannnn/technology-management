@@ -3,3 +3,22 @@
     color: red;
     transition: all;
 }
+.truncate {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-container {
+    overflow-x: auto; /* Thêm thanh cuộn ngang khi cần thiết */
+    -webkit-overflow-scrolling: touch; /* Hỗ trợ cuộn mượt trên thiết bị di động */
+    margin-bottom: 15px; /* Đảm bảo thanh cuộn không bị che khuất */
+}
+
+table {
+    min-width: 600px; /* Đảm bảo bảng đủ rộng để kích hoạt thanh cuộn ngang */
+}
+.select2-container {
+    width: 100% !important;
+}

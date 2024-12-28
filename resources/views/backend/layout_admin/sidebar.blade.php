@@ -53,6 +53,14 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('support-request.index') }}">
+                        <span>
+                            <i class="ti ti-question-mark"></i>
+                        </span>
+                        <span class="hide-menu">Support request</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('role.index') }}">
                         <span>
                             <i class="ti ti-pencil"></i>
