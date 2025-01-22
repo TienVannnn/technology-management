@@ -1,8 +1,12 @@
-<script src="/backend/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="/backend/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/backend/assets/js/sidebarmenu.js"></script>
-<script src="/backend/assets/js/app.min.js"></script>
-<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="{{ asset('backend/assets/js/core/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('backend/assets/js/core/popper.min.js') }}"></script>
+<script src="{{ asset('backend/assets/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ asset('backend/assets/js/make-read.js') }}"></script>
+
+<script src="{{ asset('backend/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+
+<!-- Kaiadmin JS -->
+<script src="{{ asset('backend/assets/js/kaiadmin.min.js') }}"></script>
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 
 {!! Toastr::message() !!}

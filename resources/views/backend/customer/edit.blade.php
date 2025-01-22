@@ -1,6 +1,6 @@
 @extends('backend.layout_admin.main')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">

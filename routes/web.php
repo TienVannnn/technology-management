@@ -9,11 +9,12 @@ use App\Http\Controllers\Backend\ReusableController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\SupportRequestController;
+use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\SendRequestController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+#Admin
 Route::post('/change-status/{id}/{slug}', [ReusableController::class, 'changeStatus'])->name('reusable.changeStatus');
 Route::get('/admin/login', [AuthController::class, 'login_form'])->name('login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('handleLoginAdmin');
@@ -32,10 +33,32 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::delete('/support-request/history/{id}/delete', [SupportRequestController::class, 'history_delete'])->name('sr.history_delete');
 
     Route::get('/support-request/search', [SupportRequestController::class, 'search'])->name('sr.search');
+    Route::post('/mark-requests-read', [SupportRequestController::class, 'markRequestsRead'])->name('admin.mark-requests-read');
     Route::resource('/user', UserController::class);
     Route::resource('/customer', CustomerController::class);
     Route::resource('/role', RoleController::class);
     Route::resource('/permission', PermissionController::class);
     Route::resource('/department', DepartmentController::class);
     Route::resource('/support-request', SupportRequestController::class);
+    Route::post('/support-request/{id}/confirm', [SupportRequestController::class, 'confirm'])->name('sr.confirm');
+    Route::post('/support-request/{id}/cancle', [SupportRequestController::class, 'cancle'])->name('sr.cancle');
+    Route::get('/support-request/{id}/reply', [SupportRequestController::class, 'reply'])->name('sr.reply');
+    Route::post('/support-request/reply', [SupportRequestController::class, 'handle_reply'])->name('sr.handle_reply');
 });
+
+#Customer
+Route::get('/', [HomeController::class, 'home'])->name('customer.dashboard');
+Route::get('/customer/register', [FrontendAuthController::class, 'form_register'])->name('customer.register_page');
+Route::get('/customer/login', [FrontendAuthController::class, 'form_login'])->name('customer.login_page');
+Route::post('/customer/register', [FrontendAuthController::class, 'register'])->name('customer.register');
+Route::post('/customer/login', [FrontendAuthController::class, 'login'])->name('customer.login');
+Route::get('/customer/logout', [FrontendAuthController::class, 'logout'])->name('customer.logout');
+Route::get('/customer/profile', [FrontendAuthController::class, 'profile'])->name('customer.profile');
+Route::get('/customer/overview', [FrontendAuthController::class, 'overview'])->name('customer.overview');
+Route::get('/customer/change-password', [FrontendAuthController::class, 'page_change_password'])->name('customer.page_change-password');
+Route::post('/customer/change-password', [FrontendAuthController::class, 'change_password'])->name('customer.change-password');
+Route::get('/customer/edit-account', [FrontendAuthController::class, 'page_edit_account'])->name('customer.page_edit-account');
+Route::post('/customer/edit-account', [FrontendAuthController::class, 'edit_account'])->name('customer.edit-account');
+Route::post('/customer/change-avatar', [FrontendAuthController::class, 'change_avatar'])->name('customer.change-avatar');
+
+Route::post('/send-request', [SendRequestController::class, 'send_request'])->name('customer.send-request');

@@ -1,6 +1,6 @@
 @extends('backend.layout_admin.main')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4 cfd">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="container shadow">
@@ -28,13 +28,15 @@
                 <div>
                     {{ $changes->count() }} changes
                 </div>
-                <a href="{{ route('support-request.index') }}" class="btn btn-warning btn-sm me-2"><i
-                        class="fas fa-eye"></i>Xem danh sách yêu cầu</a>
+                @can('list supportrequest')
+                    <a href="{{ route('support-request.index') }}" class="btn btn-warning btn-sm me-2"><i
+                            class="fas fa-eye"></i>Xem danh sách yêu cầu</a>
+                @endcan
             </div>
             <div class="card">
                 <div class="card-body">
                     @if ($changes->count() > 0)
-                        <div class="table-container">
+                        <div class="table-responsive">
                             <table class="table">
                                 <thead class="table-primary">
                                     <tr>

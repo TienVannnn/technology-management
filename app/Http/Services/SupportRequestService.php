@@ -65,4 +65,11 @@ class SupportRequestService
     //     $request->delete();
     //     return;
     // }
+
+    public function viewSR($id)
+    {
+        $sr = SupportRequest::find($id);
+        if (!$sr) abort(404);
+        return $sr;
+    }
 }

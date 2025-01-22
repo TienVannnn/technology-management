@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('support_requests', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('department_id');
             $table->text('request');

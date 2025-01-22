@@ -5,16 +5,21 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\SupportRequest;
 use App\Http\Services\SupportRequestService;
+use App\Jobs\ReplyRequestJob;
 use App\Models\Customer;
 use App\Models\Department;
+use App\Models\ReplyRequest;
 use App\Models\RequestChange;
 use Illuminate\Http\Request;
 use App\Models\SupportRequest as ModelSuportRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class SupportRequestController extends Controller
 {
     protected $rs;
+    use AuthorizesRequests;
     public function __construct(SupportRequestService $request)
     {
         $this->rs = $request;
@@ -24,6 +29,7 @@ class SupportRequestController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('list supportrequest');
         $requests = $this->rs->getSupportRequests();
         $departments = Department::orderByDesc('id')->get();
         $title = 'List of support requests';
@@ -40,6 +46,7 @@ class SupportRequestController extends Controller
      */
     public function create()
     {
+        $this->authorize('add supportrequest');
         $title = 'Create a new support request';
         $customers = Customer::orderByDesc('id')->get();
         $departments = Department::orderByDesc('id')->get();
@@ -51,6 +58,7 @@ class SupportRequestController extends Controller
      */
     public function store(SupportRequest $request)
     {
+        $this->authorize('add supportrequest');
         $this->rs->createSupportRequest($request);
         return redirect()->route('support-request.index');
     }
@@ -60,7 +68,9 @@ class SupportRequestController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $sr = $this->rs->viewSR($id);
+        $title = 'Chi tiết yêu cầu';
+        return view('backend.request-support.request_detail', compact('sr', 'title'));
     }
 
     /**
@@ -68,6 +78,7 @@ class SupportRequestController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('edit supportrequest');
         $sr = ModelSuportRequest::find($id);
         if (!$sr) abort(404);
         $customers = Customer::orderByDesc('id')->get();
@@ -81,6 +92,7 @@ class SupportRequestController extends Controller
      */
     public function update(SupportRequest $request, string $id)
     {
+        $this->authorize('edit supportrequest');
         $sr = ModelSuportRequest::find($id);
         if (!$sr) abort(404);
         $this->rs->updateSupportRequest($request, $sr);
@@ -92,6 +104,7 @@ class SupportRequestController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete supportrequest');
         try {
             $sr = ModelSuportRequest::find($id);
             if (!$sr) abort(404);
@@ -147,6 +160,7 @@ class SupportRequestController extends Controller
 
     public function history(Request $request)
     {
+        $this->authorize('list requestchange');
         $fromDate = $request->input('from_date', null);
         $toDate = $request->input('to_date', null);
         $title = 'Lịch sử thay đổi yêu cầu hỗ trợ';
@@ -156,6 +170,7 @@ class SupportRequestController extends Controller
 
     public function history_detail($id)
     {
+        $this->authorize('list requestchange');
         $requestchange = RequestChange::find($id);
         if (!$requestchange) abort(404);
         $title = 'Chi tiết thay đổi';
@@ -177,5 +192,73 @@ class SupportRequestController extends Controller
         $changes = $query->orderByDesc('created_at')->paginate(10);
         $title = 'Lịch sử thay đổi yêu cầu hỗ trợ';
         return view('backend.request-support.history', compact('changes', 'title', 'fromDate', 'toDate'));
+    }
+
+    public function markRequestsRead()
+    {
+        ModelSuportRequest::where('is_new', true)->update(['is_new' => false]);
+        return response()->json(['success' => true]);
+    }
+
+    public function confirm($id)
+    {
+        $module = ModelSuportRequest::find($id);
+        if (!$module) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Không tìm thấy yêu cầu này'
+            ]);
+        }
+        $module->update(['status' => 1]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Trạng thái đã được xác nhận'
+        ]);
+    }
+
+    public function cancle($id)
+    {
+        $module = ModelSuportRequest::find($id);
+        if (!$module) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Không tìm thấy yêu cầu này'
+            ]);
+        }
+        $module->update(['status' => -1]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Trạng thái đã được hủy'
+        ]);
+    }
+
+    public function reply($id)
+    {
+        $sr = ModelSuportRequest::find($id);
+        if (!$sr) abort(404);
+        $title = 'Liên hệ ' . $sr->title;
+        return view('backend.request-support.reply', compact('title', 'sr'));
+    }
+
+    public function handle_reply(Request $request)
+    {
+        try {
+            $sr = ModelSuportRequest::find($request->id);
+            if (!$sr) abort(404);
+            $title = $request->title;
+            $content = $request->content;
+            ReplyRequest::create([
+                'title' => $title,
+                'content' => $content,
+                'user_id' => Auth::user()->id,
+                'sr_id' => $sr->id
+            ]);
+            Session::flash('success', 'Gửi thư thành công');
+            ReplyRequestJob::dispatch($title, $request->email, $content)->delay(now()->addSecond(10));
+            return redirect()->route('support-request.show', $sr->id);
+        } catch (\Exception) {
+            Session::flash('error', 'Có lỗi xảy ra khi gửi');
+            return redirect()->back();
+        }
     }
 }

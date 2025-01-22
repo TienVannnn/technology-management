@@ -1,6 +1,6 @@
 @extends('backend.layout_admin.main')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4 cfd">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
@@ -17,24 +17,26 @@
                                 permission</a>
                         @endcan
                     </div>
-                    <div class="card">
+                    <div class="card ">
                         <div class="card-body">
                             @if ($permissions->count() > 0)
-                                <table class="table">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Parent</th>
-                                            @can(['edit permission', 'delete permission'])
-                                                <th scope="col">Handle</th>
-                                            @endcan
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {!! \App\Helpers\Helper::permission($permissions, 0, '', $permissions->firstItem()) !!}
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="table-primary">
+                                            <tr>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Parent</th>
+                                                @can(['edit permission', 'delete permission'])
+                                                    <th scope="col">Handle</th>
+                                                @endcan
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {!! \App\Helpers\Helper::permission($permissions, 0, '', $permissions->firstItem()) !!}
+                                        </tbody>
+                                    </table>
+                                </div>
                             @else
                                 <p class="alert alert-danger">No permission found</p>
                             @endif

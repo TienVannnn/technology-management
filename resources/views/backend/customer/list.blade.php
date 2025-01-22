@@ -1,6 +1,6 @@
 @extends('backend.layout_admin.main')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4 cfd">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
@@ -20,48 +20,50 @@
                     <div class="card">
                         <div class="card-body">
                             @if ($customers->count() > 0)
-                                <table class="table">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Phone</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Status</th>
-                                            @can(['edit customer', 'delete customer'])
-                                                <th scope="col">Handle</th>
-                                            @endcan
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($customers as $key => $customer)
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="table-primary">
                                             <tr>
-                                                <th scope="row">{{ $customers->firstItem() + $key }}</th>
-                                                <td>{{ $customer->name }}</td>
-                                                <td>{{ $customer->phone ?? 'Chưa có' }}</td>
-                                                <td>{{ $customer->email }}</td>
-                                                <td>{!! \App\Helpers\Helper::active($customer->status, $customer->id, 'customer') !!}</td>
-                                                <td class="d-flex align-items-center">
-                                                    @can('edit customer')
-                                                        <a href="{{ route('customer.edit', $customer->id) }}"
-                                                            class="btn btn-outline-primary btn-sm me-2" title="Edit"><i
-                                                                class="fas fa-pen-to-square"></i></a>
-                                                    @endcan
-                                                    @can('delete customer')
-                                                        <form action="{{ route('customer.destroy', $customer->id) }}"
-                                                            method="POST" class="delete-form">
-                                                            @method('DELETE')
-                                                            @csrf
-                                                            <button type="button" title="Delete"
-                                                                class="btn btn-outline-danger btn-sm delete-btn"><i
-                                                                    class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    @endcan
-                                                </td>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Phone</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Status</th>
+                                                @can(['edit customer', 'delete customer'])
+                                                    <th scope="col">Handle</th>
+                                                @endcan
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($customers as $key => $customer)
+                                                <tr>
+                                                    <th scope="row">{{ $customers->firstItem() + $key }}</th>
+                                                    <td>{{ $customer->name }}</td>
+                                                    <td>{{ $customer->phone ?? 'Chưa có' }}</td>
+                                                    <td>{{ $customer->email }}</td>
+                                                    <td>{!! \App\Helpers\Helper::active($customer->status, $customer->id, 'customer') !!}</td>
+                                                    <td class="d-flex align-items-center">
+                                                        @can('edit customer')
+                                                            <a href="{{ route('customer.edit', $customer->id) }}"
+                                                                class="btn btn-outline-primary btn-sm me-2" title="Edit"><i
+                                                                    class="fas fa-pen-to-square"></i></a>
+                                                        @endcan
+                                                        @can('delete customer')
+                                                            <form action="{{ route('customer.destroy', $customer->id) }}"
+                                                                method="POST" class="delete-form">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="button" title="Delete"
+                                                                    class="btn btn-outline-danger btn-sm delete-btn"><i
+                                                                        class="fas fa-trash"></i></button>
+                                                            </form>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             @else
                                 <p class="alert alert-danger">No customer found</p>
                             @endif

@@ -1,39 +1,288 @@
-<header class="app-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <ul class="navbar-nav">
-            <li class="nav-item d-block d-xl-none">
-                <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                    <i class="ti ti-menu-2"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                    <i class="ti ti-bell-ringing"></i>
-                    <div class="notification bg-primary rounded-circle"></div>
-                </a>
-            </li>
-        </ul>
-        <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/uploads/avatars/{{ Auth::user()->avatar ?? 'avatar.jpg' }}" alt="avatar"
-                            width="35" height="35" class="rounded-circle">
+<div class="main-header">
+    <div class="main-header-logo">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="dark">
+            <a href="index.html" class="logo">
+                <img src="/backend/assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
+                    height="20">
+            </a>
+            <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                    <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                    <i class="gg-menu-left"></i>
+                </button>
+            </div>
+            <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+            </button>
+        </div>
+        <!-- End Logo Header -->
+    </div>
+    <!-- Navbar Header -->
+    <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+        <div class="container-fluid">
+            <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button type="submit" class="btn btn-search pe-1">
+                            <i class="fa fa-search search-icon"></i>
+                        </button>
+                    </div>
+                    <input type="text" placeholder="Search ..." class="form-control">
+                </div>
+            </nav>
+
+            <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false" aria-haspopup="true">
+                        <i class="fa fa-search"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                        <div class="message-body">
-                            <a href="{{ route('admin.profile') }}"
-                                class="d-flex align-items-center gap-2 dropdown-item">
-                                <i class="ti ti-user fs-6"></i>
-                                <p class="mb-0 fs-3">My Profile</p>
+                    <ul class="dropdown-menu dropdown-search animated fadeIn">
+                        <form class="navbar-left navbar-form nav-search">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search ..." class="form-control">
+                            </div>
+                        </form>
+                    </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret submenu">
+                    <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-envelope"></i>
+                    </a>
+                    <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
+                        <li>
+                            <div class="dropdown-title d-flex justify-content-between align-items-center">
+                                Messages
+                                <a href="#" class="small">Mark all as read</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="scroll-wrapper message-notif-scroll scrollbar-outer"
+                                style="position: relative;">
+                                <div class="message-notif-scroll scrollbar-outer scroll-content scroll-scrolly_visible"
+                                    style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 250px;">
+                                    <div class="notif-center">
+                                        <a href="#">
+                                            <div class="notif-img">
+                                                <img src="/backend/assets/img/jm_denis.jpg" alt="Img Profile">
+                                            </div>
+                                            <div class="notif-content">
+                                                <span class="subject">Jimmy Denis</span>
+                                                <span class="block"> How are you ? </span>
+                                                <span class="time">5 minutes ago</span>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="notif-img">
+                                                <img src="/backend/assets/img/chadengle.jpg" alt="Img Profile">
+                                            </div>
+                                            <div class="notif-content">
+                                                <span class="subject">Chad</span>
+                                                <span class="block"> Ok, Thanks ! </span>
+                                                <span class="time">12 minutes ago</span>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="notif-img">
+                                                <img src="/backend/assets/img/mlane.jpg" alt="Img Profile">
+                                            </div>
+                                            <div class="notif-content">
+                                                <span class="subject">Jhon Doe</span>
+                                                <span class="block">
+                                                    Ready for the meeting today...
+                                                </span>
+                                                <span class="time">12 minutes ago</span>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="notif-img">
+                                                <img src="/backend/assets/img/talha.jpg" alt="Img Profile">
+                                            </div>
+                                            <div class="notif-content">
+                                                <span class="subject">Talha</span>
+                                                <span class="block"> Hi, Apa Kabar ? </span>
+                                                <span class="time">17 minutes ago</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="scroll-element scroll-x scroll-scrolly_visible">
+                                    <div class="scroll-element_outer">
+                                        <div class="scroll-element_size"></div>
+                                        <div class="scroll-element_track"></div>
+                                        <div class="scroll-bar" style="width: 0px;"></div>
+                                    </div>
+                                </div>
+                                <div class="scroll-element scroll-y scroll-scrolly_visible">
+                                    <div class="scroll-element_outer">
+                                        <div class="scroll-element_size"></div>
+                                        <div class="scroll-element_track"></div>
+                                        <div class="scroll-bar" style="height: 202px; top: 0px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="see-all" href="javascript:void(0);">See all messages<i
+                                    class="fa fa-angle-right"></i>
                             </a>
-                            <a href="{{ route('admin.logout') }}"
-                                class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret submenu">
+
+                    <x-header-notification />
+
+
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                    <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fas fa-layer-group"></i>
+                    </a>
+                    <div class="dropdown-menu quick-actions animated fadeIn">
+                        <div class="quick-actions-header">
+                            <span class="title mb-1">Quick Actions</span>
+                            <span class="subtitle op-7">Shortcuts</span>
+                        </div>
+                        <div class="scroll-wrapper quick-actions-scroll scrollbar-outer" style="position: relative;">
+                            <div class="quick-actions-scroll scrollbar-outer scroll-content"
+                                style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
+                                <div class="quick-actions-items">
+                                    <div class="row m-0">
+                                        <a class="col-6 col-md-4 p-0" href="#">
+                                            <div class="quick-actions-item">
+                                                <div class="avatar-item bg-danger rounded-circle">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </div>
+                                                <span class="text">Calendar</span>
+                                            </div>
+                                        </a>
+                                        <a class="col-6 col-md-4 p-0" href="#">
+                                            <div class="quick-actions-item">
+                                                <div class="avatar-item bg-warning rounded-circle">
+                                                    <i class="fas fa-map"></i>
+                                                </div>
+                                                <span class="text">Maps</span>
+                                            </div>
+                                        </a>
+                                        <a class="col-6 col-md-4 p-0" href="#">
+                                            <div class="quick-actions-item">
+                                                <div class="avatar-item bg-info rounded-circle">
+                                                    <i class="fas fa-file-excel"></i>
+                                                </div>
+                                                <span class="text">Reports</span>
+                                            </div>
+                                        </a>
+                                        <a class="col-6 col-md-4 p-0" href="#">
+                                            <div class="quick-actions-item">
+                                                <div class="avatar-item bg-success rounded-circle">
+                                                    <i class="fas fa-envelope"></i>
+                                                </div>
+                                                <span class="text">Emails</span>
+                                            </div>
+                                        </a>
+                                        <a class="col-6 col-md-4 p-0" href="#">
+                                            <div class="quick-actions-item">
+                                                <div class="avatar-item bg-primary rounded-circle">
+                                                    <i class="fas fa-file-invoice-dollar"></i>
+                                                </div>
+                                                <span class="text">Invoice</span>
+                                            </div>
+                                        </a>
+                                        <a class="col-6 col-md-4 p-0" href="#">
+                                            <div class="quick-actions-item">
+                                                <div class="avatar-item bg-secondary rounded-circle">
+                                                    <i class="fas fa-credit-card"></i>
+                                                </div>
+                                                <span class="text">Payments</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scroll-element scroll-x">
+                                <div class="scroll-element_outer">
+                                    <div class="scroll-element_size"></div>
+                                    <div class="scroll-element_track"></div>
+                                    <div class="scroll-bar"></div>
+                                </div>
+                            </div>
+                            <div class="scroll-element scroll-y">
+                                <div class="scroll-element_outer">
+                                    <div class="scroll-element_size"></div>
+                                    <div class="scroll-element_track"></div>
+                                    <div class="scroll-bar"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </li>
+
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                    <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
+                        aria-expanded="false">
+                        <div class="avatar-sm">
+                            <img src="/uploads/avatars/{{ Auth::user()->avatar ?? 'avatar.jpg' }}" alt="..."
+                                class="avatar-img rounded-circle">
+                        </div>
+                        <span class="profile-username">
+                            <span class="op-7">Hi,</span>
+                            <span class="fw-bold">Hizrian</span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user animated fadeIn">
+                        <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer" style="position: relative;">
+                            <div class="dropdown-user-scroll scrollbar-outer scroll-content"
+                                style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
+                                <li>
+                                    <div class="user-box">
+                                        <div class="avatar-lg">
+                                            <img src="/backend/assets/img/profile.jpg" alt="image profile"
+                                                class="avatar-img rounded">
+                                        </div>
+                                        <div class="u-text">
+                                            <h4>{{ Auth::user()->name }}</h4>
+                                            <p class="text-muted">{{ Auth::user()->email }}</p>
+                                            <a href="{{ route('admin.profile') }}"
+                                                class="btn btn-xs btn-secondary btn-sm">View
+                                                Profile</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">My Profile</a>
+                                    <a class="dropdown-item" href="#">My Balance</a>
+                                    <a class="dropdown-item" href="#">Inbox</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Account Setting</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
+                                </li>
+                            </div>
+                            <div class="scroll-element scroll-x">
+                                <div class="scroll-element_outer">
+                                    <div class="scroll-element_size"></div>
+                                    <div class="scroll-element_track"></div>
+                                    <div class="scroll-bar"></div>
+                                </div>
+                            </div>
+                            <div class="scroll-element scroll-y">
+                                <div class="scroll-element_outer">
+                                    <div class="scroll-element_size"></div>
+                                    <div class="scroll-element_track"></div>
+                                    <div class="scroll-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
                 </li>
             </ul>
         </div>
     </nav>
-</header>
+    <!-- End Navbar -->
+</div>

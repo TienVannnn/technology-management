@@ -17,7 +17,6 @@
                             </select>
                         </div>
                     </div>
-                    <div id="chart"></div>
                 </div>
             </div>
         </div>

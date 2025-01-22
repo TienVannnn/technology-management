@@ -1,84 +1,90 @@
-<aside class="left-sidebar">
-    <!-- Sidebar scroll-->
-    <div>
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="./index.html" class="text-nowrap logo-img">
-                <img src="/backend/assets/images/logos/dark-logo.svg" width="180" alt="" />
+<div class="sidebar" data-background-color="dark">
+    <div class="sidebar-logo">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="dark">
+            <a href="{{ route('admin.dashboard') }}" class="logo">
+                <img src="/backend/assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
+                    height="20" />
             </a>
-            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-                <i class="ti ti-x fs-8"></i>
+            <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                    <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                    <i class="gg-menu-left"></i>
+                </button>
             </div>
+            <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+            </button>
         </div>
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-            <ul id="sidebarnav">
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Home</span>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('admin.dashboard') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-layout-dashboard"></i>
-                        </span>
-                        <span class="hide-menu">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">UI COMPONENTS</span>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('department.index') }}">
-                        <span>
-                            <i class="ti ti-building"></i>
-                        </span>
-                        <span class="hide-menu">Department</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('user.index') }}">
-                        <span>
-                            <i class="ti ti-user"></i>
-                        </span>
-                        <span class="hide-menu">User</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('customer.index') }}">
-                        <span>
-                            <i class="ti ti-users"></i>
-                        </span>
-                        <span class="hide-menu">Customer</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('support-request.index') }}">
-                        <span>
-                            <i class="ti ti-question-mark"></i>
-                        </span>
-                        <span class="hide-menu">Support request</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('role.index') }}">
-                        <span>
-                            <i class="ti ti-pencil"></i>
-                        </span>
-                        <span class="hide-menu">Role</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('permission.index') }}">
-                        <span>
-                            <i class="ti ti-hammer"></i>
-                        </span>
-                        <span class="hide-menu">Permission</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
+        <!-- End Logo Header -->
     </div>
-    <!-- End Sidebar scroll-->
-</aside>
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+                <li class="nav-item active">
+                    <a href="{{ route('admin.dashboard') }}" class="collapsed">
+                        <i class="fas fa-home"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section">Components</h4>
+                </li>
+                @can('list department')
+                    <li class="nav-item">
+                        <a href="{{ route('department.index') }}">
+                            <i class="fas fa-desktop"></i>
+                            <p>Department</p>
+                            <span class="badge badge-success">4</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('list user')
+                    <li class="nav-item">
+                        <a href="{{ route('user.index') }}">
+                            <i class="fas fa-desktop"></i>
+                            <p>User</p>
+                        </a>
+                    </li>
+                @endcan
+                @can('list customer')
+                    <li class="nav-item">
+                        <a href="{{ route('customer.index') }}">
+                            <i class="fas fa-desktop"></i>
+                            <p>Customer</p>
+                        </a>
+                    </li>
+                @endcan
+                @can('list supportrequest')
+                    <li class="nav-item">
+                        <a href="{{ route('support-request.index') }}">
+                            <i class="fas fa-desktop"></i>
+                            <p>Support request</p>
+                        </a>
+                    </li>
+                @endcan
+                @can('list role')
+                    <li class="nav-item">
+                        <a href="{{ route('role.index') }}">
+                            <i class="fas fa-desktop"></i>
+                            <p>Role</p>
+                        </a>
+                    </li>
+                @endcan
+                @can('list permission')
+                    <li class="nav-item">
+                        <a href="{{ route('permission.index') }}">
+                            <i class="fas fa-desktop"></i>
+                            <p>Permission</p>
+                        </a>
+                    </li>
+                @endcan
+            </ul>
+        </div>
+    </div>
+</div>

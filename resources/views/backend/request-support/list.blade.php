@@ -1,6 +1,6 @@
 @extends('backend.layout_admin.main')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4 cfd">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="container shadow">
@@ -61,9 +61,11 @@
                     {{ $requests->count() }} requests
                 </div>
                 <div>
-                    <a href="{{ route('sr.history') }}" class="btn btn-warning btn-sm me-2"><i class="fas fa-eye"></i>Xem
-                        lịch
-                        sử thay đổi</a>
+                    @can('list requestchange')
+                        <a href="{{ route('sr.history') }}" class="btn btn-warning btn-sm me-2"><i class="fas fa-eye"></i>Xem
+                            lịch
+                            sử thay đổi</a>
+                    @endcan
                     @can('add supportrequest')
                         <a href="{{ route('support-request.create') }}" class="btn btn-secondary btn-sm "><i
                                 class="fas fa-plus"></i>Add support request</a>
@@ -73,7 +75,7 @@
             <div class="card">
                 <div class="card-body">
                     @if ($requests->count() > 0)
-                        <div class="table-container">
+                        <div class="table-responsive">
                             <table class="table">
                                 <thead class="table-primary">
                                     <tr>
@@ -146,7 +148,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>

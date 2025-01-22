@@ -1,6 +1,6 @@
 @extends('backend.layout_admin.main')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4 cfd">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
@@ -19,42 +19,44 @@
                     <div class="card">
                         <div class="card-body">
                             @if ($roles->count() > 0)
-                                <table class="table">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Name</th>
-                                            @can(['edit role', 'delete role'])
-                                                <th scope="col">Handle</th>
-                                            @endcan
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($roles as $key => $role)
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="table-primary">
                                             <tr>
-                                                <th scope="row">{{ $roles->firstItem() + $key }}</th>
-                                                <td>{{ $role->name }}</td>
-                                                <td class="d-flex align-items-center">
-                                                    @can('edit role')
-                                                        <a href="{{ route('role.edit', $role->id) }}"
-                                                            class="btn btn-outline-primary btn-sm me-2" title="Edit"><i
-                                                                class="fas fa-pen-to-square"></i></a>
-                                                    @endcan
-                                                    @can('delete role')
-                                                        <form action="{{ route('role.destroy', $role->id) }}" method="POST"
-                                                            class="delete-form">
-                                                            @method('DELETE')
-                                                            @csrf
-                                                            <button type="button" title="Delete"
-                                                                class="btn btn-outline-danger btn-sm delete-btn"><i
-                                                                    class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    @endcan
-                                                </td>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Name</th>
+                                                @can(['edit role', 'delete role'])
+                                                    <th scope="col">Handle</th>
+                                                @endcan
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($roles as $key => $role)
+                                                <tr>
+                                                    <th scope="row">{{ $roles->firstItem() + $key }}</th>
+                                                    <td>{{ $role->name }}</td>
+                                                    <td class="d-flex align-items-center">
+                                                        @can('edit role')
+                                                            <a href="{{ route('role.edit', $role->id) }}"
+                                                                class="btn btn-outline-primary btn-sm me-2" title="Edit"><i
+                                                                    class="fas fa-pen-to-square"></i></a>
+                                                        @endcan
+                                                        @can('delete role')
+                                                            <form action="{{ route('role.destroy', $role->id) }}" method="POST"
+                                                                class="delete-form">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="button" title="Delete"
+                                                                    class="btn btn-outline-danger btn-sm delete-btn"><i
+                                                                        class="fas fa-trash"></i></button>
+                                                            </form>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             @else
                                 <p class="alert alert-danger">No role found</p>
                             @endif

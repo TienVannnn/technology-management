@@ -1,6 +1,6 @@
 @extends('backend.layout_admin.main')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4 cfd">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
@@ -19,44 +19,46 @@
                     <div class="card">
                         <div class="card-body">
                             @if ($users->count() > 0)
-                                <table class="table">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Email</th>
-                                            @can(['edit user', 'delete user'])
-                                                <th scope="col">Handle</th>
-                                            @endcan
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($users as $key => $user)
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="table-primary">
                                             <tr>
-                                                <th scope="row">{{ $users->firstItem() + $key }}</th>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td class="d-flex align-items-center">
-                                                    @can('edit user')
-                                                        <a href="{{ route('user.edit', $user->id) }}"
-                                                            class="btn btn-outline-primary btn-sm me-2" title="Edit"><i
-                                                                class="fas fa-pen-to-square"></i></a>
-                                                    @endcan
-                                                    @can('delete user')
-                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                                            class="delete-form">
-                                                            @method('DELETE')
-                                                            @csrf
-                                                            <button type="button" title="Delete"
-                                                                class="btn btn-outline-danger btn-sm delete-btn"><i
-                                                                    class="fas fa-trash"></i></button>
-                                                        </form>
-                                                    @endcan
-                                                </td>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                @can(['edit user', 'delete user'])
+                                                    <th scope="col">Handle</th>
+                                                @endcan
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($users as $key => $user)
+                                                <tr>
+                                                    <th scope="row">{{ $users->firstItem() + $key }}</th>
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td class="d-flex align-items-center">
+                                                        @can('edit user')
+                                                            <a href="{{ route('user.edit', $user->id) }}"
+                                                                class="btn btn-outline-primary btn-sm me-2" title="Edit"><i
+                                                                    class="fas fa-pen-to-square"></i></a>
+                                                        @endcan
+                                                        @can('delete user')
+                                                            <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                                class="delete-form">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="button" title="Delete"
+                                                                    class="btn btn-outline-danger btn-sm delete-btn"><i
+                                                                        class="fas fa-trash"></i></button>
+                                                            </form>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             @else
                                 <p class="alert alert-danger">No user found</p>
                             @endif

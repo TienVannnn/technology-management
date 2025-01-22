@@ -1,6 +1,6 @@
 @extends('backend.layout_admin.main')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
         <div class="card-body">
             <h5 class="card-title fw-semibold mb-4"><a href="{{ route('support-request.index') }}"><i
                         class="fas fa-arrow-left me-2 p-2 rounded-circle btn btn-outline-secondary"></i></a>Add new
